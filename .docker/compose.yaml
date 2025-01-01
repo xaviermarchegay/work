@@ -1,0 +1,67 @@
+services:
+    php:
+        container_name: work-php
+        build:
+            context: .
+        restart: unless-stopped
+        ports:
+            - "8088:80"
+        environment:
+            APP_UID: "1000"
+            APP_GID: "1000"
+            DISABLE_AUTORUN_SCRIPTS: "1"
+            DOCUMENT_ROOT: "/public"
+            XDEBUG_MODE: off
+        networks:
+            work:
+                aliases:
+                    - fpm.local
+        volumes:
+            - ../:/var/www/html
+#    php-messenger:
+#        container_name: work-messenger
+#        build:
+#            context: .
+#        restart: unless-stopped
+#        environment:
+#            APP_UID: "1000"
+#            APP_GID: "1000"
+#        command: php bin/console messenger:consume scheduler_work --all --time-limit=86400
+#        networks:
+#            work:
+#                aliases:
+#                    - messenger.local
+#        volumes:
+#            - ../:/var/www/html
+#        depends_on:
+#            - php
+    db:
+        container_name: work-db
+        image: mariadb:lts
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: work
+            MYSQL_USER: work
+            MYSQL_PASSWORD: work
+            MYSQL_ROOT_PASSWORD: work
+        networks:
+            work:
+                aliases:
+                    - db.local
+        volumes:
+            - ./mysql:/var/lib/mysql
+        command:
+            - "--character-set-server=utf8mb4"
+            - "--collation-server=utf8mb4_unicode_ci"
+    redis:
+        container_name: work-redis
+        image: redis:alpine
+        restart: unless-stopped
+        networks:
+            work:
+                aliases:
+                    - redis.local
+        volumes:
+            - ./redis:/data
+networks:
+    work:

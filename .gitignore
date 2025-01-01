@@ -1,3 +1,6 @@
+/composer.lock
+.idea
+.composer
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -9,17 +12,16 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
 
 ###> symfony/phpunit-bridge ###
-.phpunit.result.cache
+.phpunit.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-###> symfony/asset-mapper ###
-/public/assets/
-/assets/vendor/
-###< symfony/asset-mapper ###
+.docker/mysql
+.docker/redis
+assets/vendor
