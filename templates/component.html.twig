@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+    {% for component in components %}
+        {{ component(component.component_name, component.component_extra ?? {}) }}
+    {% endfor %}
+{% endblock %}

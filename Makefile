@@ -4,7 +4,7 @@ SHELL := /bin/bash
 DOCKER_RUN_PHP = docker compose -f .docker/compose.yaml run --rm php "bash" "-c"
 DOCKER_COMPOSE = docker compose -f .docker/compose.yaml
 
-start: upd doctrine/migrations doctrine/fixtures assets/install #[Global] Start application
+start: upd assets/install #[Global] Start application
 
 src/vendor: #[Composer] install dependencies
 	$(DOCKER_RUN_PHP) "composer install --no-interaction"
@@ -36,12 +36,6 @@ bash: #[Docker] Connect to php container with current host user
 
 logs: #[Docker] Show logs
 	$(DOCKER_COMPOSE) logs -f
-
-doctrine/migrations: #[Symfony] Run database migration
-	$(DOCKER_RUN_PHP) "bin/console doctrine:migrations:migrate --no-interaction"
-
-doctrine/fixtures: #[Symfony] Run database fixtures load
-	$(DOCKER_RUN_PHP) "bin/console doctrine:fixtures:load --no-interaction"
 
 assets/install: #[Symfony] Install assets
 	$(DOCKER_RUN_PHP) "bin/console assets:install"

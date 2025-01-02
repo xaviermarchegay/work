@@ -1,0 +1,6 @@
+# config/packages/ux_icons.yaml
+ux_icons:
+  default_icon_attributes:
+    fill: currentColor
+    width: '24'
+    height: '24'
