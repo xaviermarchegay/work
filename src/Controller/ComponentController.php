@@ -20,21 +20,23 @@ class ComponentController extends AbstractController
     #[Template('component.html.twig')]
     public function gitlabProject(GitlabProject $project): array
     {
+        $title = $project->getName();
         $components = [
             ['component_name' => 'MergeRequestList', 'component_extra' => ['project_id' => $project->getId()]],
             ['component_name' => 'PipelineList', 'component_extra' => ['project_id' => $project->getId()]],
             ['component_name' => 'BranchList', 'component_extra' => ['project_id' => $project->getId()]],
         ];
 
-        return compact('components');
+        return compact('title', 'components');
     }
 
     #[Route('/gitlab/{id}/commits?{branch}', name: 'app_gitlab_commits', requirements: ['branch' => '.+'])]
     #[Template('component.html.twig')]
     public function gitlabCommits(GitlabProject $project, string $branch): array
     {
+        $title = $project->getName();
         $components = [['component_name' => 'CommitList', 'component_extra' => ['project_id' => $project->getId(), 'branch' => $branch]]];
 
-        return compact('components');
+        return compact('title', 'components');
     }
 }

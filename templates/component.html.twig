@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ title|default('Work') }}{% endblock %}
+
 {% block body %}
     {% if components is defined %}
         {% set default = {loading: 'defer', 'loading-template': 'partials/loading.html.twig'} %}

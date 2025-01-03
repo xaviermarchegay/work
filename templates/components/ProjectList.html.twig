@@ -1,5 +1,5 @@
 <div{{ attributes }} data-poll="delay(3600000)|$render">
-    <h1>Gitlab</h1>
+    <h4>Gitlab</h4>
     <div class="list-group">
         {% for project in this.projects %}
             <a href="{{ path('app_gitlab_project', {'id': project.id}) }}" class="list-group-item list-group-item-action">
