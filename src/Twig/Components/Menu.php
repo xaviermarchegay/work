@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Twig\Components;
 
+use App\Repository\ExternalLinkRepository;
 use App\Repository\GitlabProjectRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -16,6 +17,7 @@ final class Menu
 
     public function __construct(
         private readonly GitlabProjectRepository $gitlabProjectRepository,
+        private readonly ExternalLinkRepository $externalLinkRepository,
         private readonly UrlGeneratorInterface $urlGenerator,
     )
     {
@@ -24,6 +26,11 @@ final class Menu
     public function getGitlabProjects(): iterable
     {
         return $this->gitlabProjectRepository->findAll();
+    }
+
+    public function getExternalLinks(): iterable
+    {
+        return $this->externalLinkRepository->findAll();
     }
 
     public function getHelmMainCommitUrl(): string

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Entity\ExternalLink;
 use App\Entity\GitlabInstance;
 use App\Entity\GitlabProject;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -36,5 +37,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Gitlab');
         yield MenuItem::linkToCrud('Instances', null, GitlabInstance::class);
         yield MenuItem::linkToCrud('Projects', null, GitlabProject::class);
+
+        yield MenuItem::section('Misc');
+        yield MenuItem::linkToCrud('External Links', null, ExternalLink::class);
+
     }
 }

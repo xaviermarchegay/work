@@ -18,6 +18,16 @@
                         {% endfor %}
                     </ul>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        External Links
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for externalLinks in this.externalLinks %}
+                            <li><a class="dropdown-item" href="{{ externalLinks.link }}" target="_blank">{{ externalLinks.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="{{ this.helmMainCommitUrl }}">Helm Commits</a></li>
             </ul>
         </div>
