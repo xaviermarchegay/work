@@ -23,6 +23,9 @@ class GitlabProject
     #[ORM\JoinColumn(nullable: false)]
     private ?GitlabInstance $instance = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $path = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,6 +68,18 @@ class GitlabProject
     public function setInstance(?GitlabInstance $instance): static
     {
         $this->instance = $instance;
+
+        return $this;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(string $path): static
+    {
+        $this->path = $path;
 
         return $this;
     }

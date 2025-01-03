@@ -20,6 +20,8 @@ final class PipelineList
     #[LiveProp]
     public ?int $project_id = null;
 
+    public string $title = 'Pipelines';
+
     public function __construct(
         private readonly GitlabProjectRepository $projectRepository,
         private readonly Gitlab $gitlab,

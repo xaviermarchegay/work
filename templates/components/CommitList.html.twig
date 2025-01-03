@@ -28,7 +28,7 @@
                                             <option selected>Target</option>
                                             {% for target in this.branches %}
                                                 {% if this.branch != target.name and target.protected %}
-                                                    <option value="{{ this.project.instance.url }}/{{ this.project.name }}/-/merge_requests/new?merge_request%5Bsource_project_id%5D={{ this.project.projectId }}&merge_request%5Bsource_branch%5D={{ this.branch|url_encode }}&merge_request%5Btarget_project_id%5D={{ this.project.projectId }}&merge_request%5Btarget_branch%5D={{ target.name|url_encode }}">
+                                                    <option value="{{ this.project.instance.url }}/{{ this.project.path }}/-/merge_requests/new?merge_request%5Bsource_project_id%5D={{ this.project.projectId }}&merge_request%5Bsource_branch%5D={{ this.branch|url_encode }}&merge_request%5Btarget_project_id%5D={{ this.project.projectId }}&merge_request%5Btarget_branch%5D={{ target.name|url_encode }}">
                                                         {{ target.name }}
                                                     </option>
                                                 {% endif %}

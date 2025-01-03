@@ -23,6 +23,7 @@ class GitlabProjectCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Gitlab Project')
             ->setEntityLabelInPlural('Gitlab Projects')
+            ->showEntityActionsInlined()
             ;
     }
 
@@ -30,6 +31,7 @@ class GitlabProjectCrudController extends AbstractCrudController
     {
         yield IdField::new('project_id');
         yield TextField::new('name');
+        yield TextField::new('path');
         yield AssociationField::new('instance');
     }
 }

@@ -1,6 +1,6 @@
 <div{{ attributes }} data-poll="delay(60000)|$render">
     {% if this.mergeRequests %}
-        <h1>Merge Requests</h1>
+        <h1>{{ this.title }}</h1>
         <table class="table table-striped table-hover table-borderless">
             <thead>
                 <tr>
@@ -23,7 +23,7 @@
                     <td>{{ mr.source_branch }}</td>
                     <td>{{ mr.target_branch }}</td>
                     <td>{{ mr.merge_status }}</td>
-                    <td>{{ mr.assignee.username }}</td>
+                    <td>{{ mr.assignee.username|default('n/a') }}</td>
                     <td>{{ mr.created_at|date }}</td>
                 </tr>
             {% endfor %}

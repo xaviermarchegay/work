@@ -20,6 +20,8 @@ final class MergeRequestList
     #[LiveProp]
     public ?int $project_id = null;
 
+    public string $title = 'Merge Requests';
+
     public function __construct(
         private readonly GitlabProjectRepository $projectRepository,
         private readonly Gitlab $gitlab,

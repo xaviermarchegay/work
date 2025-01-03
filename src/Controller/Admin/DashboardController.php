@@ -31,7 +31,8 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToUrl('Homepage', 'fas fa-home', '/')->setLinkRel('app_homepage');
+
         yield MenuItem::section('Gitlab');
         yield MenuItem::linkToCrud('Instances', null, GitlabInstance::class);
         yield MenuItem::linkToCrud('Projects', null, GitlabProject::class);

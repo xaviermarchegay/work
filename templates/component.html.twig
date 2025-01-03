@@ -1,9 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ title }}{% endblock %}
-
 {% block body %}
-    {% for component in components %}
-        {{ component(component.component_name, component.component_extra ?? {}) }}
-    {% endfor %}
+    {% if components is defined %}
+        {% set default = {loading: 'defer', 'loading-template': 'partials/loading.html.twig'} %}
+        {% for component in components %}
+            {% if component.component_extra is defined %}
+                {% set extra = component.component_extra|merge(default) %}
+            {% else %}
+                {% set extra = default %}
+            {% endif %}
+
+            {{ component(component.component_name, extra) }}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block meta %}{% endblock %}
     <title>{% block title %}Work{% endblock %}</title>
+    <link id="favicon" rel="shortcut icon" type="image/svg+xml" href="{{ asset('icons/bi/person-workspace.svg') }}"/>
 </head>
 <body data-bs-theme="dark">
 <div class="container">
+    {{ component('Menu') }}
     {% block body %}{% endblock %}
     <div id="flash-messages">
         {% for label, messages in app.flashes %}

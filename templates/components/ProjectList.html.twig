@@ -1,19 +1,10 @@
 <div{{ attributes }} data-poll="delay(3600000)|$render">
     <h1>Gitlab</h1>
-    <table class="table table-striped table-hover table-borderless">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Last Updated At</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="list-group">
         {% for project in this.projects %}
-            <tr>
-                <th scope="row"><a href="{{ path('app_gitlab_project', {'id': project.project.id}) }}">{{ project.gitlab.name_with_namespace }}</a></th>
-                <td>{{ project.gitlab.updated_at|date }}</td>
-            </tr>
+            <a href="{{ path('app_gitlab_project', {'id': project.id}) }}" class="list-group-item list-group-item-action">
+                {{ project.name }}
+            </a>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 </div>
