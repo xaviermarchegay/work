@@ -13,7 +13,8 @@ class ComponentController extends AbstractController
     #[Template('component.html.twig')]
     public function index(): array
     {
-        return [];
+        $title = 'Work';
+        return compact('title');
     }
 
     #[Route('/gitlab/{id}', name: 'app_gitlab_project')]

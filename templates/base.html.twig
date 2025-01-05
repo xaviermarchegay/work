@@ -9,7 +9,7 @@
 </head>
 <body data-bs-theme="dark">
 <div class="container">
-    {{ component('Menu', {title: title|default('Work')}) }}
+    {{ component('Menu', {title: title}) }}
     {% block body %}{% endblock %}
     <div id="flash-messages">
         {% for label, messages in app.flashes %}
