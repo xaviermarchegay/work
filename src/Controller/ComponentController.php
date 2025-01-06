@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\GitlabProject;
+use App\Entity\JiraInstance;
 use Symfony\Bridge\Twig\Attribute\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,6 +16,18 @@ class ComponentController extends AbstractController
     {
         $title = 'Work';
         return compact('title');
+    }
+
+    #[Route('/jira/{id}', name: 'app_jira')]
+    #[Template('component.html.twig')]
+    public function jiraProject(JiraInstance $project): array
+    {
+        $title = $project->getName();
+        $components = [
+            ['component_name' => 'IssueList', 'component_extra' => ['project_id' => $project->getId()]],
+        ];
+
+        return compact('title', 'components');
     }
 
     #[Route('/gitlab/{id}', name: 'app_gitlab_project')]

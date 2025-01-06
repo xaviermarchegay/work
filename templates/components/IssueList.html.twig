@@ -1,0 +1,33 @@
+<div{{ attributes }} data-poll="delay(60000)|$render">
+    <h4>{{ this.title }}</h4>
+    <table class="table table-striped table-hover table-borderless">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Component</th>
+                <th>Version</th>
+                <th>Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for issue in this.issues %}
+            <tr>
+                <td>
+                    <a href="{{ this.project.url }}/browse/{{ issue.key }}" target="_blank">
+                        {{ issue.key }}
+                    </a>
+                </td>
+                <td>{{ issue.fields.summary }}</td>
+                <td>{{ issue.fields.status.name }}</td>
+                <td>{{ issue.fields.priority.name }}</td>
+                <td>{{ issue.fields.components|first.name|default('n/a') }}</td>
+                <td>{{ issue.fields.fixVersions|first.name|default('n/a') }}</td>
+                <td>{{ issue.fields.updated|date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

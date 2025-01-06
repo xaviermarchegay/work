@@ -30,6 +30,7 @@ class JiraInstanceCrudController extends AbstractCrudController
     {
         yield TextField::new('name');
         yield UrlField::new('url')->setHelp('without the trailing slash');
+        yield TextField::new('username');
         yield TextareaField::new('token');
     }
 }

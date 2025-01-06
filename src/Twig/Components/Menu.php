@@ -6,6 +6,7 @@ namespace App\Twig\Components;
 
 use App\Repository\ExternalLinkRepository;
 use App\Repository\GitlabProjectRepository;
+use App\Repository\JiraInstanceRepository;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
@@ -16,11 +17,17 @@ final class Menu
     use DefaultActionTrait;
 
     public function __construct(
+        private readonly JiraInstanceRepository $jiraInstanceRepository,
         private readonly GitlabProjectRepository $gitlabProjectRepository,
         private readonly ExternalLinkRepository $externalLinkRepository,
         private readonly UrlGeneratorInterface $urlGenerator,
     )
     {
+    }
+
+    public function getJiraInstances(): iterable
+    {
+        return $this->jiraInstanceRepository->findAll();
     }
 
     public function getGitlabProjects(): iterable

@@ -22,6 +22,9 @@ class JiraInstance
     #[ORM\Column(length: 512)]
     private ?string $token = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class JiraInstance
     public function setToken(string $token): static
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->username = $username;
 
         return $this;
     }
