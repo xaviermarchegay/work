@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Entity\ExternalLink;
 use App\Entity\GitlabInstance;
 use App\Entity\GitlabProject;
+use App\Entity\JiraInstance;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -34,12 +35,14 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToUrl('Homepage', 'fas fa-home', '/')->setLinkRel('app_homepage');
 
+        yield MenuItem::section('Jira');
+        yield MenuItem::linkToCrud('Instances', null, JiraInstance::class);
+
         yield MenuItem::section('Gitlab');
         yield MenuItem::linkToCrud('Instances', null, GitlabInstance::class);
         yield MenuItem::linkToCrud('Projects', null, GitlabProject::class);
 
         yield MenuItem::section('Misc');
         yield MenuItem::linkToCrud('External Links', null, ExternalLink::class);
-
     }
 }
