@@ -23,8 +23,17 @@
                 <td>{{ issue.fields.summary }}</td>
                 <td>{{ issue.fields.status.name }}</td>
                 <td>{{ issue.fields.priority.name }}</td>
-                <td>{{ issue.fields.components|first.name|default('n/a') }}</td>
-                <td>{{ issue.fields.fixVersions|first.name|default('n/a') }}</td>
+                <td>
+                    {{ issue.fields.components|first.name }}
+                </td>
+                <td>
+                    {% set fixVersion = issue.fields.fixVersions|first.name|default(false) %}
+                    {% if fixVersion %}
+                        <a href="https://lmdw.atlassian.net/issues/?jql=fixVersion={{ fixVersion }}%20ORDER%20BY%20created%20ASC" target="_blank">
+                            {{ fixVersion }}
+                        </a>
+                    {% endif %}
+                </td>
                 <td>{{ issue.fields.updated|date }}</td>
             </tr>
         {% endfor %}
