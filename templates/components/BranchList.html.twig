@@ -1,77 +1,89 @@
 <div{{ attributes }} data-poll="delay(10000)|$render">
-    <h4>{{ this.title }}</h4>
-    <table class="table table-striped table-hover table-borderless">
-        <thead>
-            <tr>
-                <th>Actions</th>
-                <th>Name</th>
-                <th>Commit Date</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for branch in this.branches %}
-            <tr>
-                <td>
-                    <a href="{{ branch.web_url }}" target="_blank">
-                        {{ ux_icon('bi:gitlab') }}
-                    </a>
-                    {% if branch.merged and not branch.protected %}
-                    <a class="btn p-0" href="{{ branch.web_url|u.replace('tree/', 'branches?state=all&sort=updated_desc&search=') }}" target="_blank">
-                        {{ ux_icon('bi:trash') }}
-                    </a>
-                    {% elseif not branch.default %}
-                        <button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#merge-request-{{ branch.name }}">
-                            {{ ux_icon('bi:git') }}
-                        </button>
-                        <div class="modal fade" id="merge-request-{{ branch.name }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">{{ branch.name }}</h5>
+    <div class="accordion accordion-flush">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBranchList" aria-expanded="true" aria-controls="collapseOne">
+                    {{ this.title }}
+                </button>
+            </h2>
+            <div id="collapseBranchList" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <table class="table table-striped table-hover table-borderless">
+                        <thead>
+                        <tr>
+                            <th>Actions</th>
+                            <th>Name</th>
+                            <th>Commit Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for branch in this.branches %}
+                            <tr>
+                                <td>
+                                    <a href="{{ branch.web_url }}" target="_blank">
+                                        {{ ux_icon('bi:gitlab') }}
+                                    </a>
+                                    {% if branch.merged and not branch.protected %}
+                                        <a class="btn p-0" href="{{ branch.web_url|u.replace('tree/', 'branches?state=all&sort=updated_desc&search=') }}" target="_blank">
+                                            {{ ux_icon('bi:trash') }}
+                                        </a>
+                                    {% elseif not branch.default %}
+                                        <button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#merge-request-{{ branch.name }}">
+                                            {{ ux_icon('bi:git') }}
+                                        </button>
+                                        <div class="modal fade" id="merge-request-{{ branch.name }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">{{ branch.name }}</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <select class="form-select" onchange="window.open(this.options[this.selectedIndex].value)">
+                                                            <option selected>Target</option>
+                                                            {% for target in this.branches %}
+                                                                {% if branch.name != target.name and target.protected %}
+                                                                    <option value="{{ this.project.instance.url }}/{{ this.project.path }}/-/merge_requests/new?merge_request%5Bsource_project_id%5D={{ this.project.projectId }}&merge_request%5Bsource_branch%5D={{ branch.name|url_encode }}&merge_request%5Btarget_project_id%5D={{ this.project.projectId }}&merge_request%5Btarget_branch%5D={{ target.name|url_encode }}">
+                                                                        {{ target.name }}
+                                                                    </option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <th scope="row">
+                                    <a href="{{ path('app_gitlab_commits', {'id': this.project.id, 'branch': branch.name|url_encode}) }}">{{ branch.name }}</a>
+                                </th>
+                                <td>
+                                    <button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#commit-{{ branch.name }}">
+                                        {{ branch.commit.created_at|date }}
+                                    </button>
+                                    <div class="modal fade" id="commit-{{ branch.name }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <figure>
+                                                        <blockquote class="blockquote">
+                                                            <p>{{ branch.commit.title|u.truncate(80, '...', false) }}</p>
+                                                        </blockquote>
+                                                        <figcaption class="blockquote-footer">
+                                                            {{ branch.commit.author_name }} ({{ branch.commit.author_email }})
+                                                        </figcaption>
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-body">
-                                        <select class="form-select" onchange="window.open(this.options[this.selectedIndex].value)">
-                                            <option selected>Target</option>
-                                            {% for target in this.branches %}
-                                                {% if branch.name != target.name and target.protected %}
-                                                    <option value="{{ this.project.instance.url }}/{{ this.project.path }}/-/merge_requests/new?merge_request%5Bsource_project_id%5D={{ this.project.projectId }}&merge_request%5Bsource_branch%5D={{ branch.name|url_encode }}&merge_request%5Btarget_project_id%5D={{ this.project.projectId }}&merge_request%5Btarget_branch%5D={{ target.name|url_encode }}">
-                                                        {{ target.name }}
-                                                    </option>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                </td>
-                <th scope="row">
-                    <a href="{{ path('app_gitlab_commits', {'id': this.project.id, 'branch': branch.name|url_encode}) }}">{{ branch.name }}</a>
-                </th>
-                <td>
-                    <button type="button" class="btn p-0" data-bs-toggle="modal" data-bs-target="#commit-{{ branch.name }}">
-                        {{ branch.commit.created_at|date }}
-                    </button>
-                    <div class="modal fade" id="commit-{{ branch.name }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <figure>
-                                        <blockquote class="blockquote">
-                                            <p>{{ branch.commit.title|u.truncate(80, '...', false) }}</p>
-                                        </blockquote>
-                                        <figcaption class="blockquote-footer">
-                                            {{ branch.commit.author_name }} ({{ branch.commit.author_email }})
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
