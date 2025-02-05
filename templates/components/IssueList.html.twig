@@ -1,5 +1,9 @@
 <div{{ attributes }} data-poll="delay(10000)|$render">
     <h4>{{ this.title }}</h4>
+    <div class="d-grid gap-2">
+        <input type="text" class="form-control form-control-lg" autofocus data-model="debounce(100)|query" value="{{ query }}"/>
+    </div>
+    <hr>
     <table class="table table-striped table-hover table-borderless">
         <thead>
             <tr>

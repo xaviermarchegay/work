@@ -18,23 +18,6 @@ services:
                     - fpm.local
         volumes:
             - ../:/var/www/html
-#    php-messenger:
-#        container_name: work-messenger
-#        build:
-#            context: .
-#        restart: unless-stopped
-#        environment:
-#            APP_UID: "1000"
-#            APP_GID: "1000"
-#        command: php bin/console messenger:consume scheduler_work --all --time-limit=86400
-#        networks:
-#            work:
-#                aliases:
-#                    - messenger.local
-#        volumes:
-#            - ../:/var/www/html
-#        depends_on:
-#            - php
     db:
         container_name: work-db
         image: mariadb:lts
